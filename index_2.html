@@ -416,6 +416,13 @@
   };
 
   // ---------- category tree ----------
+  function escapeHtml(str){
+    if(str===undefined||str===null) return "";
+    return String(str).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
   function buildTree(products){
     var tree = {};
     products.forEach(function(p){
@@ -659,7 +666,7 @@
       status.hidden = true;
       search.disabled = false;
     })
-    .catch(() => { status.textContent = "Catalogo temporaneamente non disponibile. Ricarica la pagina per riprovare."; });
+    .catch(error => { console.error(error); status.textContent = "Catalogo temporaneamente non disponibile. Ricarica la pagina per riprovare."; });
 
 })();
 </script>
